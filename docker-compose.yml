@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  fastapi-app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Tell the container how to reach Ollama on your Windows host
+      - OLLAMA_BASE_URL=http://host.docker.internal:11434/v1
+    # Keep the container alive and allow hot reload (optional, good for dev)
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./main.py:/app/main.py  # Mount code for live updates (optional)
