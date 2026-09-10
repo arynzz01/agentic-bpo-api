@@ -152,7 +152,7 @@ if GROQ_API_KEY:
         base_url="https://api.groq.com/openai/v1",
         api_key=GROQ_API_KEY,
     )
-    AI_MODEL = "llama-3.1-8b-instant"
+    AI_MODEL = "openai/gpt-oss-20b"
 else:
     OLLAMA_BASE_URL = os.environ.get("OLLAMA_BASE_URL", "http://localhost:11434/v1")
     print(f"🔗 No Groq key found. Running in LOCAL MODE with Ollama at {OLLAMA_BASE_URL}")
