@@ -1,14 +1,28 @@
 # week1_llm_supervisor.py
-from typing import TypedDict, Literal, List
-from langgraph.graph import StateGraph, END
-from langchain_openai import ChatOpenAI
+
+# --- Step 1: Load environment BEFORE any LangChain imports ---
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-# --- 1. STATE ---
+# --- Step 2: Configure LangSmith BEFORE LangChain imports ---
+os.environ["LANGSMITH_TRACING"] = "true"
+os.environ["LANGSMITH_PROJECT"] = os.getenv("LANGSMITH_PROJECT", "agentic-bpo-dev")
+os.environ["LANGSMITH_API_KEY"] = os.getenv("LANGSMITH_API_KEY", "")
+os.environ["LANGCHAIN_TRACING_V2"] = "true"  # Backup var for older SDK versions
+os.environ["LANGCHAIN_PROJECT"] = os.getenv("LANGSMITH_PROJECT", "agentic-bpo-dev")
+
+# --- Step 3: NOW import LangChain/LangGraph (they'll pick up env vars) ---
+from typing import TypedDict, Literal, List
+from langgraph.graph import StateGraph, END
+from langchain_openai import ChatOpenAI
+
+print("📊 LangSmith tracing enabled\n")
+
+# --- 4. STATE ---
 class TeamState(TypedDict):
+    # ... (keep everything else the same)
     task: str
     next_worker: str
     research_notes: str
